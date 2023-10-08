@@ -22,16 +22,30 @@ ONNX_CPU_OPERATOR_VERSIONED_TYPED_ML_KERNEL(
     KernelDefBuilder().TypeConstraint("T", DataTypeImpl::GetTensorType<double>()).MayInplace(0, 0),
     TreeEnsembleRegressor<double>);
 
+ONNX_CPU_OPERATOR_VERSIONED_TYPED_ML_KERNEL(
+    TreeEnsembleRegressor,
+    3, 4,
+    float,
+    KernelDefBuilder().TypeConstraint("T", DataTypeImpl::GetTensorType<float>()).MayInplace(0, 0),
+    TreeEnsembleRegressor<float>);
+
+ONNX_CPU_OPERATOR_VERSIONED_TYPED_ML_KERNEL(
+    TreeEnsembleRegressor,
+    3, 4,
+    double,
+    KernelDefBuilder().TypeConstraint("T", DataTypeImpl::GetTensorType<double>()).MayInplace(0, 0),
+    TreeEnsembleRegressor<double>);
+
 ONNX_CPU_OPERATOR_TYPED_ML_KERNEL(
     TreeEnsembleRegressor,
-    3,
+    5,
     float,
     KernelDefBuilder().TypeConstraint("T", DataTypeImpl::GetTensorType<float>()).MayInplace(0, 0),
     TreeEnsembleRegressor<float>);
 
 ONNX_CPU_OPERATOR_TYPED_ML_KERNEL(
     TreeEnsembleRegressor,
-    3,
+    5,
     double,
     KernelDefBuilder().TypeConstraint("T", DataTypeImpl::GetTensorType<double>()).MayInplace(0, 0),
     TreeEnsembleRegressor<double>);
@@ -53,11 +67,13 @@ Status TreeEnsembleRegressor<T>::GetRemovableAttributes(InlinedVector<std::strin
         "nodes_missing_value_tracks_true", "nodes_modes", "nodes_nodeids", "nodes_treeids",
         "nodes_truenodeids", "nodes_values",
         "target_ids", "target_treeids", "target_nodeids",
-        "target_weights"
+        "target_weights",
+        "set_nodes_values", "set_nodes_offsets"
 #if !defined(ORT_MINIMAL_BUILD)
         "base_values_as_tensor",
         "nodes_hitrates_as_tensor", "nodes_values_as_tensor",
-        "class_weights_as_tensor"
+        "class_weights_as_tensor",
+        "set_nodes_values_as_tensor"
 #endif
   };
   removable_attributes.swap(names);

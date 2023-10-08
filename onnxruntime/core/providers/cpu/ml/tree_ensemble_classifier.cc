@@ -17,9 +17,15 @@ namespace ml {
       in_type,                                                                                                                                                                                    \
       KernelDefBuilder().TypeConstraint("T1", DataTypeImpl::GetTensorType<in_type>()).TypeConstraint("T2", {DataTypeImpl::GetTensorType<int64_t>(), DataTypeImpl::GetTensorType<std::string>()}), \
       TreeEnsembleClassifier<in_type>);                                                                                                                                                           \
+  ONNX_CPU_OPERATOR_VERSIONED_TYPED_ML_KERNEL(                                                                                                                                                    \
+      TreeEnsembleClassifier,                                                                                                                                                                     \
+      3, 4,                                                                                                                                                                                       \
+      in_type,                                                                                                                                                                                    \
+      KernelDefBuilder().TypeConstraint("T1", DataTypeImpl::GetTensorType<in_type>()).TypeConstraint("T2", {DataTypeImpl::GetTensorType<int64_t>(), DataTypeImpl::GetTensorType<std::string>()}), \
+      TreeEnsembleClassifier<in_type>);                                                                                                                                                           \
   ONNX_CPU_OPERATOR_TYPED_ML_KERNEL(                                                                                                                                                              \
       TreeEnsembleClassifier,                                                                                                                                                                     \
-      3,                                                                                                                                                                                          \
+      5,                                                                                                                                                                                          \
       in_type,                                                                                                                                                                                    \
       KernelDefBuilder().TypeConstraint("T1", DataTypeImpl::GetTensorType<in_type>()).TypeConstraint("T2", {DataTypeImpl::GetTensorType<int64_t>(), DataTypeImpl::GetTensorType<std::string>()}), \
       TreeEnsembleClassifier<in_type>);
@@ -46,11 +52,13 @@ Status TreeEnsembleClassifier<T>::GetRemovableAttributes(InlinedVector<std::stri
         "nodes_missing_value_tracks_true", "nodes_modes", "nodes_nodeids", "nodes_treeids",
         "nodes_truenodeids", "nodes_values", "class_ids", "class_treeids", "class_nodeids",
         "class_weights", "classlabels_strings",
-        "classlabels_int64s"
+        "classlabels_int64s",
+        "set_nodes_values", "set_nodes_offsets"
 #if !defined(ORT_MINIMAL_BUILD)
         "base_values_as_tensor",
         "nodes_hitrates_as_tensor", "nodes_values_as_tensor",
-        "class_weights_as_tensor"
+        "class_weights_as_tensor",
+        "set_nodes_values_as_tensor"
 #endif
   };
   removable_attributes.swap(names);

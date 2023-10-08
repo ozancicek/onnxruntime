@@ -98,6 +98,9 @@ struct TreeNodeElement {
   PtrOrWeight<T> truenode_or_weight;
   uint8_t flags;
 
+  // set_values only stores the set thresholds on a node if exists.
+  std::unordered_set<T> set_values;
+
   inline NODE_MODE mode() const { return NODE_MODE(flags & 0xF); }
   inline bool is_not_leaf() const { return !(flags & NODE_MODE::LEAF); }
   inline bool is_missing_track_true() const { return flags & MissingTrack::kTrue; }
